@@ -1,31 +1,43 @@
 package com.course_manage.cms.services;
 
 import com.course_manage.cms.entities.Course;
+import com.course_manage.cms.repository.CourseRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
 
 @Service
 public class CourseService {
 
-    public List<Course> courseList;
+    private final CourseRepository courseRepository;
 
-    public CourseService(){
-        courseList = new ArrayList<>();
-
-        UUID uuid = UUID.randomUUID();
-        System.out.println(uuid.toString());
-        String str = "a180260c-aefb-41ee-9b3b-5e229db629f0";
-//        Course course1 = new Course(str,"Course 1","Karan","sdfdsfsdfsdfsdfsdf",2999,20,false,new Date(),new Date());
-//        Course course2 = new Course(str,"Course 2","Karan","sdfdsfsdfsdfsdfsdf",2999,20,true,new Date(),new Date());
-//        courseList.addAll(Arrays.asList(course1,course2));
+    @Autowired
+    public CourseService(CourseRepository courseRepository) {
+        this.courseRepository = courseRepository;
     }
+
     public Course getCourse(String id) {
-        for (Course course : courseList) {
-            if (course.getCourseId().equals(id)) {
-                return course;
-            }
-        }
-        return null;
+        return courseRepository.findByCourseId(id);
+    }
+
+    public List<Course> getAllCourses() {
+        return courseRepository.findAll();
+    }
+
+    public List<Course> getCoursesByCourseName(String courseName) {
+        return courseRepository.findByCourseName(courseName);
+    }
+
+    public List<Course> getCoursesByTeacherName(String teacherName) {
+        return courseRepository.findByTeacherName(teacherName);
+    }
+
+    public List<Course> getActiveCourses() {
+        return courseRepository.findByIsActive(true);
+    }
+
+    public List<Course> getCoursesByPriceRange(Double minPrice, Double maxPrice) {
+        return courseRepository.findByCoursePriceBetween(minPrice, maxPrice);
     }
 }

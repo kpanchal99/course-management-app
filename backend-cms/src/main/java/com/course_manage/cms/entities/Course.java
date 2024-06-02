@@ -36,6 +36,6 @@ public class Course {
     @Column(name = "updated_at")
     private Date updatedAt;
 
-//    @ManyToMany(mappedBy = "courses")
-//    private Set<User> users = new HashSet<>();
+    @ManyToMany(mappedBy = "courses")
+    private Set<User> users = new HashSet<>();
 }
