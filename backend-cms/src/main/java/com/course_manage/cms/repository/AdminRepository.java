@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface AdminRepository extends JpaRepository<Course, String> {
 
+    @Override
+    void deleteById(String s);
 }

@@ -38,6 +38,7 @@ public class User {
             name = "user_courses",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
+
     private Set<Course> courses = new HashSet<>();
 
     @Transient

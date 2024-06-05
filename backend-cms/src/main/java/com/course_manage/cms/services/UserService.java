@@ -1,9 +1,11 @@
 package com.course_manage.cms.services;
 
+import com.course_manage.cms.dto.EnrollmentResponse;
 import com.course_manage.cms.dto.UserLogin;
 import com.course_manage.cms.dto.UserRegister;
 import com.course_manage.cms.entities.Course;
 import com.course_manage.cms.entities.User;
+import com.course_manage.cms.repository.CourseRepository;
 import com.course_manage.cms.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,8 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
-
+    @Autowired
+    private CourseRepository courseRepository;
     private List<User> userList = new ArrayList<>();
     private List<Course> courseList = new ArrayList<>();
 
@@ -59,16 +62,17 @@ public class UserService {
         return null;
     }
 
-    public boolean enrollCourse(Integer userId, String courseId) {
-        Optional<User> userOptional = userList.stream().filter(u -> u.getId().equals(userId)).findFirst();
-        Optional<Course> courseOptional = courseList.stream().filter(c -> c.getCourseId().equals(courseId)).findFirst();
+    public EnrollmentResponse enrollCourse(Integer userId, String courseId) {
+        Optional<User> userOptional = userRepository.findById(userId.longValue());
+        Optional<Course> courseOptional = courseRepository.findById(courseId);
         if (userOptional.isPresent() && courseOptional.isPresent()) {
             User user = userOptional.get();
             Course course = courseOptional.get();
             user.getCourses().add(course);
-            return true;
+            userRepository.save(user);
+            return new EnrollmentResponse("success", "Enrollment successful for Course ID: " + courseId);
         }
-        return false;
+        return new EnrollmentResponse("failed", "");
     }
 
     public List<User> getUsersByCourse(String courseId) {

@@ -25,13 +25,13 @@ public class AdminController {
 
     //deleting but no response and wrong status code
     @DeleteMapping("/deleteCourse")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public void deleteCourse(@RequestParam String courseId) {
         adminService.deleteCourse(courseId);
     }
 
-    //update status code 
     @PutMapping("/updateCourse")
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public Course updateCourse(@RequestParam String courseId, @RequestBody Course updatedCourse) {
         return adminService.updateCourse(courseId, updatedCourse);
     }

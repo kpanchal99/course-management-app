@@ -1,5 +1,6 @@
 package com.course_manage.cms.controllers;
 
+import com.course_manage.cms.dto.EnrollmentResponse;
 import com.course_manage.cms.dto.UserLogin;
 import com.course_manage.cms.dto.UserRegister;
 import com.course_manage.cms.entities.User;
@@ -52,13 +53,15 @@ public class UserController {
     }
 
     @PostMapping("/enroll")
-    @ResponseStatus(HttpStatus.OK)
-    public String enrollCourse(@RequestParam Integer userId, @RequestParam String courseId) {
-        boolean success = userService.enrollCourse(userId, courseId);
-        if (success) {
-            return "Enrollment successful for user ID: " + userId;
+    public ResponseEntity enrollCourse(@RequestBody Map<String, String> request) {
+        Integer userId = Integer.parseInt(request.get("userId"));
+        String courseId = request.get("courseId");
+        EnrollmentResponse response = userService.enrollCourse(userId, courseId);
+        if(response.getStatus() == "success") {
+            return new ResponseEntity(response,HttpStatus.CREATED);
         }
-        return "Enrollment failed. Invalid user ID or course ID.";
+        return new ResponseEntity(response,HttpStatus.BAD_REQUEST);
+
     }
 
     @GetMapping("/usersByCourse")
