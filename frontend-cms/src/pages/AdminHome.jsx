@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 import { AddCourse } from "../components/AddCourse";
+import { Header } from "../components/Header";
+import { Footer } from "../components/Footer";
 
 export const AdminHome = () => {
   // State to store courses and current course data for editing
@@ -91,7 +93,7 @@ export const AdminHome = () => {
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
-        <div className="modal-dialog">
+        <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLabel">
@@ -173,14 +175,14 @@ export const AdminHome = () => {
             <div className="modal-footer">
               <button
                 type="button"
-                className="btn btn-secondary"
+                className="btn btn-outline-dark"
                 data-bs-dismiss="modal"
               >
                 Close
               </button>
               <button
                 type="button"
-                className="btn btn-primary"
+                className="btn btn-dark"
                 onClick={handleSaveEdit}
               >
                 Save changes
@@ -189,11 +191,12 @@ export const AdminHome = () => {
           </div>
         </div>
       </div>
-
-      <div className="container mt-5">
+      <Header/>
+      <div className="py-3"></div>
+      <div className="container-fluid mt-5 px-5">
         <h2>Courses</h2>
         <AddCourse />
-        <table className="table">
+        <table className="table table-responsive my-5">
           <thead>
             <tr>
               <th>Course ID</th>
@@ -211,7 +214,7 @@ export const AdminHome = () => {
           <tbody>
             {courses.map((course) => (
               <tr key={course.courseId}>
-                <td>{course.courseId}</td>
+                <td >{course.courseId}</td>
                 <td>{course.courseName}</td>
                 <td>{course.teacherName}</td>
                 <td>{course.courseDescription}</td>
@@ -220,10 +223,10 @@ export const AdminHome = () => {
                 <td>{course.isActive ? "Yes" : "No"}</td>
                 <td>{new Date(course.createdAt).toLocaleDateString()}</td>
                 <td>{new Date(course.updatedAt).toLocaleDateString()}</td>
-                <td>
+                <td className="d-flex">
                   <button
                     type="button"
-                    className="btn btn-primary btn-sm me-1"
+                    className="btn btn-dark btn-sm me-1"
                     data-bs-toggle="modal"
                     data-bs-target="#exampleModal"
                     onClick={() => handleEdit(course.courseId)}
@@ -243,6 +246,9 @@ export const AdminHome = () => {
           </tbody>
         </table>
       </div>
+      <div className="py-5"></div>
+
+      <Footer/>
     </>
   );
 };

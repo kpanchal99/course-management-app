@@ -3,15 +3,34 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Header } from "../components/Header";
 import { getCookie } from "../utils/cookieUtils";
+import courseCardImg1 from '../assets/c1.avif'
+import courseCardImg2 from '../assets/c2.avif'
+import courseCardImg3 from '../assets/c3.avif'
+import courseCardImg4 from '../assets/c4.avif'
+import courseCardImg5 from '../assets/c5.avif'
+import { Footer } from "../components/Footer";
+
+const images = [
+  courseCardImg1,
+  courseCardImg2,
+  courseCardImg3,
+  courseCardImg4,
+  courseCardImg5
+];
+
+const getRandomImage = () => {
+  return images[Math.floor(Math.random() * images.length)];
+};
 
 export const CoursePage = () => {
   //  id route parameter
   const [course, setCourse] = useState({});
-
+  const [randomImage, setRandomImage] = useState(getRandomImage());
   const { id } = useParams(); // Use the
   const navigate = useNavigate();
   const handleEnrollCourse = async () => {
     const userId = getCookie("userid");
+    
     try {
       const payload = {
         userId: userId,
@@ -25,10 +44,12 @@ export const CoursePage = () => {
 
       if (response.data.status === "success") {
         console.log("enroll success");
+        alert("Enrolled Successfully")
         // notify();
         navigate("/");
       } else {
         console.log("enroll failed");
+        alert("Enrolled Failed")
       }
     } catch (error) {
       console.error("Error enrolling:", error);
@@ -52,15 +73,16 @@ export const CoursePage = () => {
 
   return (
     <>
-      <Header></Header>
+      <Header/>
       <section className="py-5">
-        <div className="container px-4 px-lg-5 my-5">
+        <div className="container px-4 px-lg-5 my-5" style={{height:'65vh'}}>
+          <div className="py-5"></div>
           <div className="row gx-4 gx-lg-5 align-items-center">
             <div className="col-md-6">
-              <img
-                className="card-img-top mb-5 mb-md-0"
-                src="https://dummyimage.com/600x700/dee2e6/6c757d.jpg"
-                alt="..."
+            <img
+                className="h-100 mb-5 mb-md-0 w-100 img-fluid rounded"
+                src={randomImage}
+                alt="Course"
               />
             </div>
             <div className="col-md-6">
@@ -72,13 +94,13 @@ export const CoursePage = () => {
                 </span>
                 <span>₹{course.coursePrice}</span>
               </div>
-              <p className="lead">{course.teacherName}</p>
-              <p className="lead">{course.courseDescription}</p>
-              <p className="lead">Duration : {course.no_of_weeks} weeks</p>
+              <p className="fs-5">{course.courseDescription}</p>
+              <p className="fs-5">Tutor : {course.teacherName}</p>
+              <p className="fs-5">Duration : {course.no_of_weeks} weeks</p>
 
               <div className="d-flex">
                 <button
-                  className="btn btn-outline-dark flex-shrink-0"
+                  className="btn btn-dark flex-shrink-0 w-25"
                   type="button"
                   onClick={() => handleEnrollCourse()}
                 >
@@ -89,6 +111,8 @@ export const CoursePage = () => {
           </div>
         </div>
       </section>
+      <div className="py-2"></div>
+      <Footer/>
     </>
   );
 };

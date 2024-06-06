@@ -37,26 +37,27 @@ export const Login = ({ isAdmin }) => {
       .catch((error) => {
         // Handle error
         console.error("Login error:", error.response.data);
+        alert("Login Error, Check Credentials")
       });
   };
 
   return (
-    <div className="container d-flex justify-content-center">
-      <div className="w-50 ">
-        <div className="card login-form border-1 ">
+    <div className="container d-flex justify-content-center align-items-center" style={{height:"100vh"}}>
+      <div className="col-4">
+        <div className="card login-form border-0 p-4 shadow-lg">
           <div className="card-body">
-            <h3 className="card-title text-center">
-              Log in {isAdmin && "Admin"}
+            <h3 className="card-title text-center pb-3">
+              Log In {isAdmin && "Admin"}
             </h3>
-            <div className="card-text">
+            <div className="card-text ">
               <form>
                 <div className="form-group">
                   <input
                     type="email"
-                    className="form-control form-control-sm"
+                    className="form-control my-2"
                     id="exampleInputEmail1"
                     aria-describedby="emailHelp"
-                    placeholder="Enter email"
+                    placeholder="Enter Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
@@ -64,21 +65,23 @@ export const Login = ({ isAdmin }) => {
                 <div className="form-group">
                   <input
                     type="password"
-                    className="form-control form-control-sm"
+                    className="form-control my-3"
                     id="exampleInputPassword1"
                     placeholder="Enter Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
-                <button
+               <div className="d-flex justify-content-center my-2">
+               <button
                   type="submit"
-                  className="btn btn-primary btn-block"
+                  className="btn btn-dark btn-block"
                   onClick={handleSignIn}
                 >
-                  Sign in
+                  Log In
                 </button>
-                <div className="sign-up">
+               </div>
+                <div className="sign-up text-muted text-center">
                   Don't have an account? <Link to="/Signup">Create One</Link>
                 </div>
               </form>

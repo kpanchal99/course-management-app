@@ -14,16 +14,17 @@ export const Navbar = () => {
   }, [isLogin]);
 
   // handle logout
-  function handleLogout() {
-    setCookie("email", "");
-    setCookie("userid", "");
-    setIsLogin(false);
-  }
+  // function handleLogout() {
+  //   setCookie("email", "");
+  //   setCookie("userid", "");
+  //   setIsLogin(false);
+  //   navigate("/login")
+  // }
   return (
     <>
-      <nav className="navbar navbar-expand-lg py-3">
+      <nav className="navbar navbar-expand-lg bg-dark text-white py-3">
         <div className="container-fluid">
-          <Link className="navbar-brand fw-bold" to="/">
+          <Link className="navbar-brand fw-bold text-white" to="/">
             E-Learning
           </Link>
           <button
@@ -41,7 +42,7 @@ export const Navbar = () => {
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
               <li className="nav-item">
                 <Link
-                  className="nav-link fw-bold px-3 active"
+                  className="nav-link fw-bold px-3 active text-white"
                   aria-current="page"
                   to="/"
                 >
@@ -49,7 +50,7 @@ export const Navbar = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link fw-bold px-3" to="/adminlogin">
+                <Link className="nav-link fw-bold px-3 text-white" to="/adminlogin">
                   Create a Course
                 </Link>
               </li>
@@ -72,12 +73,12 @@ export const Navbar = () => {
                   </button> */}
                 </form>
               </li>
-              {isLogin ? (
-                //handle logout functionality
+              {/* {isLogin ? ( */}
+                {/* //handle logout functionality */}
                 <>
                   <li>
                     <button
-                      className="btn btn-primary"
+                      className="btn btn-outline-light me-2"
                       type="button"
                       data-bs-toggle="offcanvas"
                       data-bs-target="#offcanvasExample"
@@ -87,29 +88,29 @@ export const Navbar = () => {
                     </button>
                   </li>
                   <li className="nav-item">
-                    <button
+                    <Link to="/login"><button
                       type="button"
-                      className="btn btn-secondary"
-                      onClick={() => {
-                        handleLogout();
-                      }}
+                      className="btn btn-outline-danger"
+                      // onClick={() => {
+                      //   handleLogout();
+                      // }}
                     >
                       Logout
-                    </button>
+                    </button></Link>
                   </li>
                 </>
-              ) : (
+              {/* ) : (
                 <li className="nav-item">
                   <Link
                     to="/login"
                     type="button"
                     id="login-user-btn"
-                    className="btn btn-primary"
+                    className="btn btn-light"
                   >
                     Login
                   </Link>
                 </li>
-              )}
+              )} */}
             </ul>
           </div>
         </div>
