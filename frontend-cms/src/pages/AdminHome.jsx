@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
-import $ from "jquery";
+import { AddCourse } from "../components/AddCourse";
 
 export const AdminHome = () => {
-  // get data on page load
+  // State to store courses and current course data for editing
   const [courses, setCourses] = useState([]);
-
-  //store data of add/ edit course
   const [courseData, setCourseData] = useState({
     courseId: "",
     courseName: "",
@@ -18,13 +16,13 @@ export const AdminHome = () => {
     isActive: false,
   });
 
+  // Fetch courses on component mount
   useEffect(() => {
     const fetchCourses = async () => {
       try {
         const response = await axios.get(
           "http://localhost:9090/api/getCourseList"
         );
-        console.log(response.data);
         setCourses(response.data);
       } catch (error) {
         console.error("Error fetching courses:", error);
@@ -32,8 +30,9 @@ export const AdminHome = () => {
     };
 
     fetchCourses();
-  }, [courses]);
+  }, []);
 
+  // Handle form field changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setCourseData({
@@ -42,31 +41,33 @@ export const AdminHome = () => {
     });
   };
 
-  const handleSave = async () => {
-    try {
-      const response = await axios.post(
-        "http://localhost:9090/api/admin/addCourse",
-        courseData
-      );
-      console.log("Course added successfully:", response.data);
-      // Reload courses after adding a new course
-      fetchCourses();
-    } catch (error) {
-      console.error("Error adding course:", error);
-    }
-  };
-
+  // Handle editing a course
   const handleEdit = (courseId) => {
-    // Find the course with the matching courseId
     const selectedCourse = courses.find(
       (course) => course.courseId === courseId
     );
-    // Set the course data to the state
     setCourseData(selectedCourse);
-    // Show the modal
-    $("#exampleModal").modal("show");
   };
 
+  // Handle saving edited course data
+  const handleSaveEdit = async () => {
+    try {
+      const response = await axios.put(
+        `http://localhost:9090/api/admin/updateCourse?courseId=${courseData.courseId}`,
+        courseData
+      );
+      console.log("Course updated successfully:", response.data);
+      // Reload courses after editing a course
+      const updatedCourses = courses.map((course) =>
+        course.courseId === courseData.courseId ? response.data : course
+      );
+      setCourses(updatedCourses);
+    } catch (error) {
+      console.error("Error updating course:", error);
+    }
+  };
+
+  // Handle deleting a course
   const handleDelete = async (courseId) => {
     try {
       await axios.delete(
@@ -74,7 +75,7 @@ export const AdminHome = () => {
       );
       console.log("Course deleted successfully");
       // Reload courses after deleting a course
-      fetchCourses();
+      setCourses(courses.filter((course) => course.courseId !== courseId));
     } catch (error) {
       console.error("Error deleting course:", error);
     }
@@ -82,22 +83,117 @@ export const AdminHome = () => {
 
   return (
     <>
-      {/* Modal */}
+      {/* Modal for editing a course */}
       <div
         className="modal fade"
         id="exampleModal"
         tabIndex="-1"
-        role="dialog"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
-        {/* Modal content */}
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalLabel">
+                Edit Course
+              </h5>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div className="modal-body">
+              <div className="mb-3">
+                <label className="form-label">Course Name</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="courseName"
+                  value={courseData.courseName}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Teacher Name</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="teacherName"
+                  value={courseData.teacherName}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Course Description</label>
+                <textarea
+                  className="form-control"
+                  name="courseDescription"
+                  value={courseData.courseDescription}
+                  onChange={handleChange}
+                ></textarea>
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Course Price</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  name="coursePrice"
+                  value={courseData.coursePrice}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-3">
+                <label className="form-label">No. of Weeks</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  name="no_of_weeks"
+                  value={courseData.no_of_weeks}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="mb-3 form-check">
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  name="isActive"
+                  checked={courseData.isActive}
+                  onChange={() =>
+                    setCourseData({
+                      ...courseData,
+                      isActive: !courseData.isActive,
+                    })
+                  }
+                />
+                <label className="form-check-label">Active</label>
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handleSaveEdit}
+              >
+                Save changes
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="container mt-5">
         <h2>Courses</h2>
+        <AddCourse />
         <table className="table">
-          {/* Table headers */}
           <thead>
             <tr>
               <th>Course ID</th>
@@ -112,7 +208,6 @@ export const AdminHome = () => {
               <th>Actions</th>
             </tr>
           </thead>
-          {/* Table body */}
           <tbody>
             {courses.map((course) => (
               <tr key={course.courseId}>
@@ -126,15 +221,17 @@ export const AdminHome = () => {
                 <td>{new Date(course.createdAt).toLocaleDateString()}</td>
                 <td>{new Date(course.updatedAt).toLocaleDateString()}</td>
                 <td>
-                  {/* Edit button */}
                   <button
+                    type="button"
                     className="btn btn-primary btn-sm me-1"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
                     onClick={() => handleEdit(course.courseId)}
                   >
                     Edit
                   </button>
-                  {/* Delete button */}
                   <button
+                    type="button"
                     className="btn btn-danger btn-sm"
                     onClick={() => handleDelete(course.courseId)}
                   >
