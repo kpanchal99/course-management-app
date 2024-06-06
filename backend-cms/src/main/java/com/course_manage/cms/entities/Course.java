@@ -7,6 +7,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -36,6 +37,10 @@ public class Course {
     @Column(name = "updated_at")
     private Date updatedAt;
 
+    @Transient
     @ManyToMany(mappedBy = "courses")
     private Set<User> users = new HashSet<>();
+
+    @Transient
+    private List<Long> userIds;
 }

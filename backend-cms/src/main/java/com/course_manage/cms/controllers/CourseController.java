@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "*")
 public class CourseController {
 
     private final CourseService courseService;
@@ -21,13 +22,13 @@ public class CourseController {
 
     @GetMapping("/getCourseById")
     @ResponseStatus(HttpStatus.OK)
-    public Course getCourseById(@RequestParam String id) {
-        return courseService.getCourse(id);
+    public Course getCourseById(@RequestParam String courseId) {
+        return courseService.getCourse(courseId);
     }
 
     @GetMapping("/getCourseList")
     public List<Course> getCourseList() {
-        return courseService.getAllCourses();
+        return courseService.getAllCoursesWithUsers();
     }
 
     @GetMapping("/getCoursesByCourseName")

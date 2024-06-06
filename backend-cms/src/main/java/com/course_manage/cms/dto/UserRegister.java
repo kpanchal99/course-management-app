@@ -8,4 +8,7 @@ import lombok.Setter;
 public class UserRegister {
     String email;
     String status;
+    long id;
+    String token;
+    Boolean isAdmin;
 }

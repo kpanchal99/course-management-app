@@ -46,19 +46,23 @@ public class UserService {
     }
 
     public UserLogin login(String email, String password) {
-        UserLogin user = new UserLogin();
-        if (userRepository.existsByEmailAndPassword(email, password)) {
+        User user = userRepository.findByEmailAndPassword(email, password);
+        System.out.println();
+        UserLogin userLogin = new UserLogin();
+        if (user != null) {
             // user exist give JWT token
             String token = UUID.randomUUID().toString();
-            user.setStatus("success");
-            user.setEmail(email);
-            user.setToken(token);
-            return user;
+            userLogin.setStatus("success");
+            userLogin.setEmail(email);
+            userLogin.setToken(token);
+            userLogin.setIsAdmin(user.isAdmin());
+            userLogin.setId(user.getId());
+            return userLogin;
         }
         // user does not exist
-        user.setStatus("failed");
-        user.setEmail(email);
-        user.setToken(null);
+        userLogin.setStatus("failed");
+        userLogin.setEmail(email);
+        userLogin.setToken(null);
         return null;
     }
 

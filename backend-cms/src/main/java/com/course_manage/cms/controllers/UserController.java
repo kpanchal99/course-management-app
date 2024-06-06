@@ -16,6 +16,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/api", produces = "application/json")
+@CrossOrigin(origins = "*") // Allow requests from http://localhost:5173
 public class UserController {
 
     private UserService userService;
@@ -64,6 +65,7 @@ public class UserController {
 
     }
 
+    //error need to check
     @GetMapping("/usersByCourse")
     @ResponseStatus(HttpStatus.OK)
     public List<User> getUsersByCourse(@RequestParam String courseId) {

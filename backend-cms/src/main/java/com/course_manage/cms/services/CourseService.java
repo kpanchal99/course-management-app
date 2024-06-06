@@ -24,7 +24,13 @@ public class CourseService {
     public List<Course> getAllCourses() {
         return courseRepository.findAll();
     }
-
+    public List<Course> getAllCoursesWithUsers() {
+        List<Course> courses = courseRepository.findAll();
+        courses.forEach(course -> {
+            course.setUserIds(courseRepository.findUserIdsByCourseId(course.getCourseId()));
+        });
+        return courses;
+    }
     public List<Course> getCoursesByCourseName(String courseName) {
         return courseRepository.findByCourseName(courseName);
     }
