@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css"; // Import Bootstrap CSS
 import { AddCourse } from "../components/AddCourse";
 import { Header } from "../components/Header";
 import { Footer } from "../components/Footer";
+import { Link } from "react-router-dom";
 
 export const AdminHome = () => {
   // State to store courses and current course data for editing
@@ -191,7 +192,7 @@ export const AdminHome = () => {
           </div>
         </div>
       </div>
-      <Header/>
+      <Header />
       <div className="py-3"></div>
       <div className="container-fluid mt-5 px-5">
         <h2>Courses</h2>
@@ -214,7 +215,11 @@ export const AdminHome = () => {
           <tbody>
             {courses.map((course) => (
               <tr key={course.courseId}>
-                <td >{course.courseId}</td>
+                <td>
+                  <Link to={"/CourseDetailsPage/" + course.courseId}>
+                    {course.courseId}
+                  </Link>
+                </td>
                 <td>{course.courseName}</td>
                 <td>{course.teacherName}</td>
                 <td>{course.courseDescription}</td>
@@ -248,7 +253,7 @@ export const AdminHome = () => {
       </div>
       <div className="py-5"></div>
 
-      <Footer/>
+      <Footer />
     </>
   );
 };

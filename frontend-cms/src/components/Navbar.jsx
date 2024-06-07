@@ -5,6 +5,7 @@ import { getCookie, setCookie } from "../utils/cookieUtils";
 export const Navbar = () => {
   const [isLogin, setIsLogin] = useState(false);
 
+  const isAdmin = getCookie("isadmin");
   // Check login status on component mount
   useEffect(() => {
     const userId = getCookie("userid");
@@ -50,7 +51,10 @@ export const Navbar = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link fw-bold px-3 text-white" to="/adminlogin">
+                <Link
+                  className="nav-link fw-bold px-3 text-white"
+                  to="/adminlogin"
+                >
                   Create a Course
                 </Link>
               </li>
@@ -74,8 +78,10 @@ export const Navbar = () => {
                 </form>
               </li>
               {/* {isLogin ? ( */}
-                {/* //handle logout functionality */}
-                <>
+              {/* //handle logout functionality */}
+              {
+                /**when user is not admin show my learnings */
+                !isAdmin && (
                   <li>
                     <button
                       className="btn btn-outline-light me-2"
@@ -87,8 +93,12 @@ export const Navbar = () => {
                       My Learnings
                     </button>
                   </li>
-                  <li className="nav-item">
-                    <Link to="/login"><button
+                )
+              }
+              {isLogin && (
+                <li className="nav-item">
+                  <Link to="/login">
+                    <button
                       type="button"
                       className="btn btn-outline-danger"
                       // onClick={() => {
@@ -96,10 +106,11 @@ export const Navbar = () => {
                       // }}
                     >
                       Logout
-                    </button></Link>
-                  </li>
-                </>
-              {/* ) : (
+                    </button>
+                  </Link>
+                </li>
+              )}
+              {!isLogin && (
                 <li className="nav-item">
                   <Link
                     to="/login"
@@ -110,7 +121,7 @@ export const Navbar = () => {
                     Login
                   </Link>
                 </li>
-              )} */}
+              )}
             </ul>
           </div>
         </div>

@@ -1,13 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import CourseImg from '../assets/recommendedCourses.avif'
-import CourseImg2 from '../assets/course2.avif'
-import courseCardImg1 from '../assets/c1.avif'
-import courseCardImg2 from '../assets/c2.avif'
-import courseCardImg3 from '../assets/c3.avif'
-import courseCardImg4 from '../assets/c4.avif'
-import courseCardImg5 from '../assets/c5.avif'
+import CourseImg from "../assets/recommendedCourses.avif";
+import CourseImg2 from "../assets/course2.avif";
+import courseCardImg1 from "../assets/c1.avif";
+import courseCardImg2 from "../assets/c2.avif";
+import courseCardImg3 from "../assets/c3.avif";
+import courseCardImg4 from "../assets/c4.avif";
+import courseCardImg5 from "../assets/c5.avif";
 
 export const Home = () => {
   const [courses, setCourses] = useState([]);
@@ -38,7 +38,7 @@ export const Home = () => {
     courseCardImg2,
     courseCardImg3,
     courseCardImg4,
-    courseCardImg5
+    courseCardImg5,
   ];
 
   const getRandomImage = () => {
@@ -59,9 +59,12 @@ export const Home = () => {
                     className="col-md-3 py-2 d-flex flex-row justify-content-center"
                   >
                     <div className="card border-1 w-100">
-                      <img src={getRandomImage()} className="img-fluid h-50 card-img-top" alt="Course" />
+                      <img
+                        src={getRandomImage()}
+                        className="img-fluid h-50 card-img-top"
+                        alt="Course"
+                      />
                       <div className="card-body">
-
                         <h4 className="card-title fw-bold">
                           {course.courseName}
                         </h4>
@@ -72,15 +75,17 @@ export const Home = () => {
                         </div>
                         <div className="">
                           <p className="card-text">
-                            <span className="fw-semibold">Tutor : </span>{course.teacherName}
+                            <span className="fw-semibold">Tutor : </span>
+                            {course.teacherName}
                           </p>
-                            <p className="card-text">
-                            <span className="fw-semibold">Price : </span>₹{course.coursePrice} 
-                            </p>
-                            <p className="card-text">
-                            <span className="fw-semibold">Duration : </span>{course.no_of_weeks} weeks
-                            </p>
-                          
+                          <p className="card-text">
+                            <span className="fw-semibold">Price : </span>₹
+                            {course.coursePrice}
+                          </p>
+                          <p className="card-text">
+                            <span className="fw-semibold">Duration : </span>
+                            {course.no_of_weeks} weeks
+                          </p>
                         </div>
                       </div>
 
@@ -127,15 +132,26 @@ export const Home = () => {
               <div className="row p-md-5">
                 <h3>Recommended Courses</h3>
                 <div className="col-md-6 py-2">
-                  <div class="card mb-3">
-                    <div class="row g-0">
-                      <div class="col-md-4">
-                        <img src={CourseImg} class="img-fluid rounded-start h-100" alt="..." />
+                  <div className="card mb-3">
+                    <div className="row g-0">
+                      <div className="col-md-4">
+                        <img
+                          src={CourseImg}
+                          className="img-fluid rounded-start h-100"
+                          alt="..."
+                        />
                       </div>
-                      <div class="col-md-8">
-                        <div class="card-body">
-                          <h5 class="card-title">Introduction to Java</h5>
-                          <p class="card-text">This beginner-friendly course covers the fundamentals of Java, including syntax, object-oriented programming, and basic algorithms. Through hands-on exercises and real-world projects, you'll learn to develop robust Java applications and build a solid foundation in programming.</p>
+                      <div className="col-md-8">
+                        <div className="card-body">
+                          <h5 className="card-title">Introduction to Java</h5>
+                          <p className="card-text">
+                            This beginner-friendly course covers the
+                            fundamentals of Java, including syntax,
+                            object-oriented programming, and basic algorithms.
+                            Through hands-on exercises and real-world projects,
+                            you'll learn to develop robust Java applications and
+                            build a solid foundation in programming.
+                          </p>
                           <a href="#" className="btn btn-dark">
                             Read More
                           </a>
@@ -145,15 +161,27 @@ export const Home = () => {
                   </div>
                 </div>
                 <div className="col-md-6 py-2">
-                  <div class="card mb-3">
-                    <div class="row g-0">
-                      <div class="col-md-4">
-                        <img src={CourseImg2} class="img-fluid rounded-start h-100" alt="..." />
+                  <div className="card mb-3">
+                    <div className="row g-0">
+                      <div className="col-md-4">
+                        <img
+                          src={CourseImg2}
+                          className="img-fluid rounded-start h-100"
+                          alt="..."
+                        />
                       </div>
-                      <div class="col-md-8">
-                        <div class="card-body">
-                          <h5 class="card-title">Full Stack Web Development</h5>
-                          <p class="card-text">Learn to build dynamic, responsive websites and powerful web applications in our Full Stack Web Development course. Master front-end and back-end technologies, including HTML, CSS, JavaScript, Node.js, and databases like MongoDB.</p>
+                      <div className="col-md-8">
+                        <div className="card-body">
+                          <h5 className="card-title">
+                            Full Stack Web Development
+                          </h5>
+                          <p className="card-text">
+                            Learn to build dynamic, responsive websites and
+                            powerful web applications in our Full Stack Web
+                            Development course. Master front-end and back-end
+                            technologies, including HTML, CSS, JavaScript,
+                            Node.js, and databases like MongoDB.
+                          </p>
                           <a href="#" className="btn btn-dark">
                             Read More
                           </a>
@@ -165,7 +193,6 @@ export const Home = () => {
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </>

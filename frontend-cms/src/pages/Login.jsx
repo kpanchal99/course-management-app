@@ -25,6 +25,7 @@ export const Login = ({ isAdmin }) => {
         console.log("Login successful:", response.data);
         setCookie("email", response.data.email);
         setCookie("userid", response.data.id);
+        setCookie("isadmin", response.data.isAdmin);
         {
           response.data.isAdmin == true && navigate("/adminhome");
         }
@@ -37,12 +38,15 @@ export const Login = ({ isAdmin }) => {
       .catch((error) => {
         // Handle error
         console.error("Login error:", error.response.data);
-        alert("Login Error, Check Credentials")
+        alert("Login Error, Check Credentials");
       });
   };
 
   return (
-    <div className="container d-flex justify-content-center align-items-center" style={{height:"100vh"}}>
+    <div
+      className="container d-flex justify-content-center align-items-center"
+      style={{ height: "100vh" }}
+    >
       <div className="col-4">
         <div className="card login-form border-0 p-4 shadow-lg">
           <div className="card-body">
@@ -72,15 +76,15 @@ export const Login = ({ isAdmin }) => {
                     onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
-               <div className="d-flex justify-content-center my-2">
-               <button
-                  type="submit"
-                  className="btn btn-dark btn-block"
-                  onClick={handleSignIn}
-                >
-                  Log In
-                </button>
-               </div>
+                <div className="d-flex justify-content-center my-2">
+                  <button
+                    type="submit"
+                    className="btn btn-dark btn-block"
+                    onClick={handleSignIn}
+                  >
+                    Log In
+                  </button>
+                </div>
                 <div className="sign-up text-muted text-center">
                   Don't have an account? <Link to="/Signup">Create One</Link>
                 </div>

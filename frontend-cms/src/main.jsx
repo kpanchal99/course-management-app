@@ -14,6 +14,7 @@ import { Signup } from "./pages/Signup.jsx";
 import { ErrorPage } from "./pages/ErrorPage.jsx";
 import { AdminHome } from "./pages/AdminHome.jsx";
 import { CoursePage } from "./pages/CoursePage.jsx";
+import { CourseDetailsPage } from "./pages/CourseDetailsPage.jsx";
 
 const Layout = () => {
   return (
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
       {
         path: "course/:id",
         element: <CoursePage />,
+      },
+      {
+        path: "/CourseDetailsPage/:id",
+        element: <CourseDetailsPage />,
       },
       {
         path: "*",
