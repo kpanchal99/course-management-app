@@ -46,4 +46,5 @@ public class CourseService {
     public List<Course> getCoursesByPriceRange(Double minPrice, Double maxPrice) {
         return courseRepository.findByCoursePriceBetween(minPrice, maxPrice);
     }
+
 }

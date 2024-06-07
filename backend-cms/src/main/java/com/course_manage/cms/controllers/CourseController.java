@@ -1,9 +1,11 @@
 package com.course_manage.cms.controllers;
 
 import com.course_manage.cms.entities.Course;
+import com.course_manage.cms.entities.User;
 import com.course_manage.cms.services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -50,4 +52,6 @@ public class CourseController {
     public List<Course> getCoursesByPriceRange(@RequestParam Double minPrice, @RequestParam Double maxPrice) {
         return courseService.getCoursesByPriceRange(minPrice, maxPrice);
     }
+
+
 }

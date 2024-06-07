@@ -1,6 +1,7 @@
 package com.course_manage.cms.services;
 
 import com.course_manage.cms.dto.EnrollmentResponse;
+import com.course_manage.cms.dto.UserCourseDTO;
 import com.course_manage.cms.dto.UserLogin;
 import com.course_manage.cms.dto.UserRegister;
 import com.course_manage.cms.entities.Course;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -63,7 +65,7 @@ public class UserService {
         userLogin.setStatus("failed");
         userLogin.setEmail(email);
         userLogin.setToken(null);
-        return null;
+        return userLogin;
     }
 
     public EnrollmentResponse enrollCourse(Integer userId, String courseId) {
@@ -89,5 +91,17 @@ public class UserService {
             }
         }
         return enrolledUsers;
+    }
+
+    public List<Course> getCoursesByUserId(Integer userId) {
+        User user = userRepository.findById(Long.valueOf(userId)).orElse(null);
+        if (user != null) {
+            return user.getCourses().stream().collect(Collectors.toList());
+        }
+        return null;
+    }
+
+    public List<UserCourseDTO> getUsersByCourseId(String courseId) {
+        return userRepository.getUsersByCourseId(courseId);
     }
 }

@@ -1,8 +1,10 @@
 package com.course_manage.cms.controllers;
 
 import com.course_manage.cms.dto.EnrollmentResponse;
+import com.course_manage.cms.dto.UserCourseDTO;
 import com.course_manage.cms.dto.UserLogin;
 import com.course_manage.cms.dto.UserRegister;
+import com.course_manage.cms.entities.Course;
 import com.course_manage.cms.entities.User;
 import com.course_manage.cms.services.UserService;
 import com.fasterxml.jackson.databind.util.JSONPObject;
@@ -70,5 +72,21 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public List<User> getUsersByCourse(@RequestParam String courseId) {
         return userService.getUsersByCourse(courseId);
+    }
+
+    @GetMapping("/coursesByUserId")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<List<Course>> getCoursesByUserId(@RequestParam Integer userId) {
+        List<Course> courses = userService.getCoursesByUserId(userId);
+        if (courses != null) {
+            return new ResponseEntity<>(courses, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/getUsersByCourseId")
+    public ResponseEntity<List<UserCourseDTO>> getUsersByCourseId(@RequestParam String courseId) {
+        List<UserCourseDTO> users = userService.getUsersByCourseId(courseId);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 }
