@@ -15,12 +15,12 @@ export const Navbar = () => {
   }, [isLogin]);
 
   // handle logout
-  // function handleLogout() {
-  //   setCookie("email", "");
-  //   setCookie("userid", "");
-  //   setIsLogin(false);
-  //   navigate("/login")
-  // }
+  function handleLogout() {
+    setCookie("email", "");
+    setCookie("userid", "");
+    setIsLogin(false);
+    // navigate("/login");
+  }
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-dark text-white py-3">
@@ -101,9 +101,9 @@ export const Navbar = () => {
                     <button
                       type="button"
                       className="btn btn-outline-danger"
-                      // onClick={() => {
-                      //   handleLogout();
-                      // }}
+                      onClick={() => {
+                        handleLogout();
+                      }}
                     >
                       Logout
                     </button>

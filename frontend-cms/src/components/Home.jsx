@@ -61,7 +61,8 @@ export const Home = () => {
                     <div className="card border-1 w-100">
                       <img
                         src={getRandomImage()}
-                        className="img-fluid h-50 card-img-top"
+                        className="img-fluid card-img-top"
+                        style={{ height: "275 px" }}
                         alt="Course"
                       />
                       <div className="card-body">
